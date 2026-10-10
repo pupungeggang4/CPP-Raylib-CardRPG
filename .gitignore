@@ -70,3 +70,11 @@ dkms.conf
 *.lai
 
 # Executables
+build/
+buildem/
+release/
+
+# Etc
+.DS_Store
+*.png~
+*.swp
