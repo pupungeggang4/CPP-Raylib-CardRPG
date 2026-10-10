@@ -6,6 +6,8 @@
 class Game {
     public:
         bool running;
+        int width, height;
+        Camera2D camera = {0};
 
         Game();
         void init();
