@@ -8,6 +8,7 @@ class Game {
         bool running;
 
         Game();
+        void init();
         void loop();
 };
 
