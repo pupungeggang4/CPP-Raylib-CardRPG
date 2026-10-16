@@ -2,14 +2,22 @@
 #include "game.hpp"
 
 #ifdef __EMSCRIPTEN__
-void emLoop () {
+EM_BOOL key_callback(int eventType, const EmscriptenKeyboardEvent *e, void *userData) {
+    if (strcmp(e->code, "Space") == 0 || strcmp(e->code, "ArrowUp") == 0 || strcmp(e->code, "ArrowDown") == 0 || strcmp(e->code, "ArrowLeft") == 0 || strcmp(e->code, "ArrowRight") == 0) {
+        return EM_TRUE;
+    }
+    return EM_FALSE;
+}
+
+void emLoop() {
     game.loop();
 }
 
 extern "C" {
 EMSCRIPTEN_KEEPALIVE
-void emRun () {
+void emRun() {
     game.init();
+    emscripten_set_keydown_callback(EMSCRIPTEN_EVENT_TARGET_DOCUMENT, NULL, EM_TRUE, key_callback);
     emscripten_set_main_loop(emLoop, 0, 0);
 }
 }
