@@ -3,11 +3,16 @@
 
 #include "includes.hpp"
 
+class Scene;
+class SceneTitle;
 class Game {
     public:
         bool running;
-        int width, height;
-        Camera2D camera = {0};
+        int width, height, logicWidth = 800, logicHeight = 600;
+        float scale = 0;
+
+        std::unordered_map<int, shared_ptr<Scene>> scenes;
+        shared_ptr<Scene> scene;
 
         Game();
         void init();

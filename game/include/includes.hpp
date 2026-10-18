@@ -20,4 +20,6 @@
 using std::shared_ptr;
 using std::make_shared;
 
+enum SceneName {TITLE, FIELD, BATTLE};
+
 #endif

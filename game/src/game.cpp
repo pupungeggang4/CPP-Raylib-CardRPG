@@ -1,4 +1,5 @@
 #include "game.hpp"
+#include "scene.hpp"
 
 Game game = Game();
 
@@ -8,37 +9,39 @@ Game::Game() {
 
 void Game::init() {
     #ifdef __EMSCRIPTEN__
-    InitWindow(800, 600, "Card RPG");
+    InitWindow(logicWidth, logicHeight, "Card RPG");
     #else
     SetConfigFlags(FLAG_WINDOW_HIGHDPI);
-    InitWindow(800, 600, "Card RPG");
+    SetConfigFlags(FLAG_VSYNC_HINT);
+    InitWindow(logicWidth, logicHeight, "Card RPG");
     #ifndef __APPLE__
     Vector2 dpiScale  = GetWindowScaleDPI();
-    width = (int)(800 * dpiScale.x);
-    height = (int)(600 * dpiScale.y);
+    width = (int)(logicWidth * dpiScale.x);
+    height = (int)(logicHeight * dpiScale.y);
     SetWindowSize(width, height);
     #endif
     SetExitKey(KEY_NULL);
     #endif
     running = 1;
-    camera.zoom = GetRenderWidth() / 800.0f;
+    scale = (float)GetRenderWidth() / logicWidth;
+
+    scenes = {};
+    scenes.emplace(TITLE, make_shared<SceneTitle>());
+    scene = scenes[TITLE];
+    scene->ready(*this);
 }
 
 void Game::loop() {
-    camera.zoom = GetRenderWidth() / 800.0f;
-
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-        #ifdef __EMSCRIPTEN__
-        Vector2 pos = GetScreenToWorld2D(GetMousePosition(), camera);
-        #else
-        Vector2 pos = GetScreenToWorld2D(Vector2Scale(GetMousePosition(), GetWindowScaleDPI().x), camera);
-        #endif
+        Vector2 pos = GetMousePosition();
         printf("(%.0f, %.0f)\n", pos.x, pos.y);
     }
 
+    scene->update(*this);
+
     BeginDrawing();
     ClearBackground(RAYWHITE);
-    DrawText("Card RPG", 20, 20, 20, BLACK);
+    scene->render(*this);
     EndDrawing();
 
     #ifdef __EMSCRIPTEN__
