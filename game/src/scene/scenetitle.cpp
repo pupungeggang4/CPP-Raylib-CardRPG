@@ -12,5 +12,5 @@ void SceneTitle::update(Game& game) {
 }
 
 void SceneTitle::render(Game& game) {
-    DrawRectangle(40, 40, 40, 40, BLUE);
+    
 }
