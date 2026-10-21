@@ -11,3 +11,6 @@ void Scene::update(Game& game) {
 
 void Scene::render(Game& game) {
 }
+
+void Scene::mouseUp(Game& game, Vector2 pos) {
+}
