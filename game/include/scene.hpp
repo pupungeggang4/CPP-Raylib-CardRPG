@@ -22,4 +22,28 @@ class SceneTitle : public Scene {
         void mouseUp(Game&, Vector2) override;
 };
 
+class SceneField : public Scene {
+    public:
+        SceneField();
+        void ready(Game&) override;
+        void update(Game&) override;
+        void render(Game&) override;
+        void mouseUp(Game&, Vector2) override;
+};
+
+class SceneBattle : public Scene {
+    public:
+        SceneBattle();
+        void ready(Game&) override;
+        void update(Game&) override;
+        void render(Game&) override;
+        void mouseUp(Game&, Vector2) override;
+};
+
+class MenuField : public Scene {
+    public:
+        MenuField();
+        void render(Game&) override;
+        void mouseUp(Game&, Vector2) override;
+};
 #endif

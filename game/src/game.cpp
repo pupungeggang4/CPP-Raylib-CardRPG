@@ -20,24 +20,21 @@ void Game::init() {
     height = (int)(logicHeight * dpiScale.y);
     SetWindowSize(width, height);
     #endif
-    SetExitKey(KEY_NULL);
+    SetExitKey(KEY_GRAVE);
     #endif
     running = 1;
     scale = (float)GetRenderWidth() / logicWidth;
 
     scenes = {};
     scenes.emplace(TITLE, make_shared<SceneTitle>());
+    scenes.emplace(FIELD, make_shared<SceneField>());
+    scenes.emplace(BATTLE, make_shared<SceneBattle>());
     scene = scenes[TITLE];
     scene->ready(*this);
 }
 
 void Game::loop() {
-    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-        Vector2 pos = GetMousePosition();
-        printf("(%.0f, %.0f)\n", pos.x, pos.y);
-        scene->mouseUp(*this, pos);
-    }
-
+    handleInput();
     scene->update(*this);
 
     BeginDrawing();
@@ -52,4 +49,21 @@ void Game::loop() {
     #else
     if (WindowShouldClose()) running = 0;
     #endif
+}
+
+void Game::handleInput() {
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+        Vector2 pos = GetMousePosition();
+        printf("(%.0f, %.0f)\n", pos.x, pos.y);
+        scene->mouseUp(*this, pos);
+    }
+}
+
+void Game::changeSceneTo(int target) {
+    try {
+        scene = scenes[target];
+        scene->ready(*this);
+    } catch (...) {
+        running = 0;
+    }
 }

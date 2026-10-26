@@ -17,6 +17,8 @@ class Game {
         Game();
         void init();
         void loop();
+        void handleInput();
+        void changeSceneTo(int);
 };
 
 extern Game game;
