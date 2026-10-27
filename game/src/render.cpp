@@ -8,3 +8,7 @@ void Render::drawText(std::string text, std::vector<float> pos, int size, Color 
     const char* cText = text.c_str();
     DrawText(cText, pos[0], pos[1], size, color);
 }
+
+void Render::drawTexture(Texture2D texture, std::vector<float> pos) {
+    DrawTexture(texture, pos[0], pos[1], WHITE);
+}

@@ -1,8 +1,11 @@
 #include "scene.hpp"
 
+#include "asset.hpp"
 #include "ui.hpp"
 #include "util.hpp"
 #include "render.hpp"
+
+#include "field.hpp"
 
 #include "game.hpp"
 
@@ -17,7 +20,9 @@ void SceneField::update(Game& game) {
 }
 
 void SceneField::render(Game& game) {
-    Render::drawRect(UI::UIField["button_menu"], BLUE);
+    game.field->render(game);
+
+    Render::drawTexture(Asset::texture["button_menu"], UI::UIField["button_menu"]);
 
     if (game.menu) {
         menuField->render(game);

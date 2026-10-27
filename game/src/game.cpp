@@ -1,5 +1,7 @@
 #include "game.hpp"
 #include "scene.hpp"
+#include "asset.hpp"
+#include "field.hpp"
 
 Game game = Game();
 
@@ -24,6 +26,9 @@ void Game::init() {
     #endif
     running = 1;
     scale = (float)GetRenderWidth() / logicWidth;
+
+    Asset::assetLoad();
+    field = make_shared<Field>();
 
     scenes = {};
     scenes.emplace(TITLE, make_shared<SceneTitle>());

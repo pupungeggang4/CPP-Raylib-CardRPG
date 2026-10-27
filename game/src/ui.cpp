@@ -15,6 +15,16 @@ std::unordered_map<std::string, std::vector<float>> UI::UIField = {
 };
 
 std::unordered_map<std::string, std::vector<float>> UI::UIBattle = {
+    {"rect", {160, 100, 480, 400}},
+    {"text_paused", {180, 120}},
+    {"button_resume", {160, 180, 480, 80}},
+    {"text_resume", {180, 200}},
+    {"button_surrender", {160, 260, 480, 80}},
+    {"text_surrender", {180, 280}},
+    {"button_exit", {160, 340, 480, 80}},
+    {"text_exit", {180, 360}},
+    {"button_quit", {160, 420, 480, 80}},
+    {"text_quit", {180, 440}},
 };
 
 std::unordered_map<std::string, std::vector<float>> UI::UIMenuField = {

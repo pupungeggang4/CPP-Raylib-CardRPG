@@ -51,4 +51,11 @@ class MenuField : public Scene {
         void render(Game&) override;
         void mouseUp(Game&, Vector2) override;
 };
+
+class MenuBattle : public Scene {
+    public:
+        MenuBattle();
+        void render(Game&) override;
+        void mouseUp(Game&, Vector2) override;
+};
 #endif

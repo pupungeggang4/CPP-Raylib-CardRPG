@@ -5,8 +5,10 @@
 
 class Asset {
     public:
-        static Texture2D arrow;
-        static Texture2D buttonMenu;
+        static std::unordered_map<std::string, Texture2D> texture;
+
+        static void assetLoad();
+        static void assetDispose();
 };
 
 #endif

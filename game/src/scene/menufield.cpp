@@ -21,4 +21,12 @@ void MenuField::render(Game& game) {
 }
 
 void MenuField::mouseUp(Game& game, Vector2 pos) {
+    if (Util::pointInsideRectUI(pos, UI::UIMenuField["button_resume"])) {
+        game.menu = false;
+    } else if (Util::pointInsideRectUI(pos, UI::UIMenuField["button_exit"])) {
+        game.menu = false;
+        game.changeSceneTo(TITLE);
+    } else if (Util::pointInsideRectUI(pos, UI::UIMenuField["button_quit"])) {
+        game.running = false;
+    }
 }

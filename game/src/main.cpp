@@ -1,5 +1,6 @@
 #include "includes.hpp"
 #include "game.hpp"
+#include "asset.hpp"
 
 #ifdef __EMSCRIPTEN__
 EM_BOOL key_callback(int eventType, const EmscriptenKeyboardEvent *e, void *userData) {
@@ -40,6 +41,7 @@ int main(int argc, char** argv) {
     while (game.running) {
         game.loop();
     }
+    Asset::assetDispose();
     #endif
     return 0;
 }
