@@ -17,6 +17,11 @@ void SceneField::ready(Game& game) {
 }
 
 void SceneField::update(Game& game) {
+    if (game.menu == false) {
+        if (game.state == NORMAL) {
+            game.field->update(game);
+        }
+    }
 }
 
 void SceneField::render(Game& game) {

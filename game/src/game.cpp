@@ -26,6 +26,7 @@ void Game::init() {
     #endif
     running = 1;
     scale = (float)GetRenderWidth() / logicWidth;
+    keyPressed = {false, false, false, false};
 
     Asset::assetLoad();
     field = make_shared<Field>();
@@ -62,6 +63,15 @@ void Game::handleInput() {
         printf("(%.0f, %.0f)\n", pos.x, pos.y);
         scene->mouseUp(*this, pos);
     }
+
+    if (IsKeyPressed(KEY_LEFT) || IsKeyPressed(KEY_A)) keyPressed[LEFT] = true;
+    if (IsKeyPressed(KEY_RIGHT) || IsKeyPressed(KEY_D)) keyPressed[RIGHT] = true;
+    if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W)) keyPressed[UP] = true;
+    if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S)) keyPressed[DOWN] = true;
+    if (IsKeyReleased(KEY_LEFT) || IsKeyReleased(KEY_A)) keyPressed[LEFT] = false;
+    if (IsKeyReleased(KEY_RIGHT) || IsKeyReleased(KEY_D)) keyPressed[RIGHT] = false;
+    if (IsKeyReleased(KEY_UP) || IsKeyReleased(KEY_W)) keyPressed[UP] = false;
+    if (IsKeyReleased(KEY_DOWN) || IsKeyReleased(KEY_S)) keyPressed[DOWN] = false;
 
     scene->keyDown(*this);
 }

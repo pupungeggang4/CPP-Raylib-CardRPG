@@ -1,5 +1,6 @@
 #include "field.hpp"
 
+#include "render.hpp"
 #include "asset.hpp"
 #include "game.hpp"
 
@@ -14,6 +15,31 @@ Field::Field() {
     }
 }
 
+void Field::update(Game& game) {
+    // Move Player
+    if (!player.moving) {
+        for (int i = 0; i < 4; i++) {
+            if (game.keyPressed[i]) {
+                player.moving = true;
+                player.movedDistance = 0;
+                player.movingDirection = i;
+                player.cellPos.x += directionCell[i][0];
+                player.cellPos.y += directionCell[i][1];
+                break;
+            }
+        }
+    } else {
+        player.pos.x += directionCell[player.movingDirection][0] * 5;
+        player.pos.y += directionCell[player.movingDirection][1] * 5;
+        player.movedDistance += 5;
+        if (player.movedDistance > 40) {
+            player.pos.x = player.cellPos.x * 40;
+            player.pos.y = player.cellPos.y * 40;
+            player.moving = false;
+        }
+    }
+}
+
 void Field::render(Game& game) {
     for (auto& value: entityList) {
         Rectangle source = {0, 0, 20, 20};
@@ -24,4 +50,6 @@ void Field::render(Game& game) {
         Vector2 origin = {0, 0};
         DrawTexturePro(Asset::texture["entity"], source, dest, origin, 0, WHITE);
     }
+
+    Render::drawRect({player.pos.x, player.pos.y, 40.0f, 40.0f}, BLUE);
 }

@@ -19,6 +19,7 @@ class Game {
         shared_ptr<Scene> scene;
         int state = NORMAL;
         bool menu = false;
+        std::array<bool, 4> keyPressed;
 
         // Game var
         shared_ptr<Field> field;

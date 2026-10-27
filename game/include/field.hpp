@@ -8,9 +8,9 @@ class Game;
 
 class FieldPlayer {
     public:
-        Vector2 pos;
-        Vector2i cellPos;
-        Vector2i destination;
+        Vector2 pos = {0, 0};
+        Vector2i cellPos = {0, 0};
+        Vector2i destination = {0, 0};
         int facing = DOWN;
 
         bool moving = false;
@@ -26,6 +26,8 @@ class FieldEntity {
 
 class Field {
     public:
+        std::array<std::array<float, 2>, 4> directionCell = {{{-1, 0}, {1, 0}, {0, -1}, {0, 1}}};
+
         std::string place;
         std::vector<int> enemyPool;
         std::vector<Recti> wall;
@@ -35,6 +37,7 @@ class Field {
         std::vector<FieldEntity> entityList;
 
         Field();
+        void update(Game&);
         void render(Game&);
 };
 
