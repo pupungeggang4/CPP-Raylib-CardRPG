@@ -9,6 +9,7 @@ class MenuBattle;
 
 class Scene {
     public:
+        int selectedTitle = 0;
         Scene();
         virtual void ready(Game&);
         virtual void update(Game&);
@@ -50,8 +51,11 @@ class SceneBattle : public Scene {
 
 class MenuField : public Scene {
     public:
+        int selected = 0;
+
         MenuField();
         void render(Game&) override;
+        void keyDown(Game&) override;
         void mouseUp(Game&, Vector2) override;
 };
 

@@ -5,7 +5,7 @@
 
 class Util {
     public:
-        static bool pointInsideRectUI(Vector2, std::vector<float>);
+        static bool pointInsideRectUI(Vector2, const std::array<float, 6>&);
 };
 
 #endif

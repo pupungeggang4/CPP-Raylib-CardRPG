@@ -1,20 +1,21 @@
 #include "ui.hpp"
 
-std::unordered_map<std::string, std::vector<float>> UI::UITitle = {
+std::unordered_map<std::string, std::array<float, 6>> UI::UITitle = {
     {"text_title", {20, 20}},
     {"button_start", {160, 80, 480, 80}},
     {"text_start", {180, 100}},
     {"button_erase", {160, 160, 480, 80}},
-    {"text_erase", {180, 180.0f}},
+    {"text_erase", {180, 180}},
     {"button_quit", {160, 240, 480, 80}},
     {"text_quit", {180, 260}},
+    {"arrow", {80, 80, 0, 80}},
 };
 
-std::unordered_map<std::string, std::vector<float>> UI::UIField = {
+std::unordered_map<std::string, std::array<float, 6>> UI::UIField = {
     {"button_menu", {740, 20, 40, 40}},
 };
 
-std::unordered_map<std::string, std::vector<float>> UI::UIBattle = {
+std::unordered_map<std::string, std::array<float, 6>> UI::UIBattle = {
     {"rect", {160, 100, 480, 400}},
     {"text_paused", {180, 120}},
     {"button_resume", {160, 180, 480, 80}},
@@ -27,7 +28,7 @@ std::unordered_map<std::string, std::vector<float>> UI::UIBattle = {
     {"text_quit", {180, 440}},
 };
 
-std::unordered_map<std::string, std::vector<float>> UI::UIMenuField = {
+std::unordered_map<std::string, std::array<float, 6>> UI::UIMenuField = {
     {"rect", {160, 140, 480, 320}},
     {"text_paused", {180, 160}},
     {"button_resume", {160, 220, 480, 80}},
@@ -36,7 +37,8 @@ std::unordered_map<std::string, std::vector<float>> UI::UIMenuField = {
     {"text_exit", {180, 320}},
     {"button_quit", {160, 380, 480, 80}},
     {"text_quit", {180, 400}},
+    {"arrow", {80, 220, 0, 80}},
 };
 
-std::unordered_map<std::string, std::vector<float>> UI::UIMenuBattle = {
+std::unordered_map<std::string, std::array<float, 6>> UI::UIMenuBattle = {
 };

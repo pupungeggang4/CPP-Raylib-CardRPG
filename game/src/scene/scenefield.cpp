@@ -30,6 +30,16 @@ void SceneField::render(Game& game) {
 }
 
 void SceneField::keyDown(Game& game) {
+    if (game.menu) {
+        menuField->keyDown(game);
+        if (IsKeyPressed(KEY_ESCAPE)) {
+            game.menu = false;
+        }
+    } else {
+        if (IsKeyPressed(KEY_ESCAPE)) {
+            game.menu = true;
+        }
+    }
 }
 
 void SceneField::mouseUp(Game& game, Vector2 pos) {
