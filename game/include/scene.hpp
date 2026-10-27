@@ -4,6 +4,9 @@
 #include "includes.hpp"
 
 class Game;
+class MenuField;
+class MenuBattle;
+
 class Scene {
     public:
         Scene();
@@ -24,6 +27,8 @@ class SceneTitle : public Scene {
 
 class SceneField : public Scene {
     public:
+        shared_ptr<MenuField> menuField;
+
         SceneField();
         void ready(Game&) override;
         void update(Game&) override;

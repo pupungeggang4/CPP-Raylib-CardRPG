@@ -13,6 +13,8 @@ class Game {
 
         std::unordered_map<int, shared_ptr<Scene>> scenes;
         shared_ptr<Scene> scene;
+        int state = NORMAL;
+        bool menu = false;
 
         Game();
         void init();

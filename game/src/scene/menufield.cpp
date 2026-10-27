@@ -10,6 +10,14 @@ MenuField::MenuField() {
 }
 
 void MenuField::render(Game& game) {
+    Render::drawRect(UI::UIMenuField["rect"], WHITE);
+    Render::drawText("Paused", UI::UIMenuField["text_paused"]);
+    Render::drawRect(UI::UIMenuField["button_resume"], YELLOW);
+    Render::drawText("Resume", UI::UIMenuField["text_resume"]);
+    Render::drawRect(UI::UIMenuField["button_exit"], PINK);
+    Render::drawText("Exit to Title", UI::UIMenuField["text_exit"]);
+    Render::drawRect(UI::UIMenuField["button_quit"], YELLOW);
+    Render::drawText("Quit Game", UI::UIMenuField["text_quit"]);
 }
 
 void MenuField::mouseUp(Game& game, Vector2 pos) {
