@@ -62,6 +62,8 @@ void Game::handleInput() {
         printf("(%.0f, %.0f)\n", pos.x, pos.y);
         scene->mouseUp(*this, pos);
     }
+
+    scene->keyDown(*this);
 }
 
 void Game::changeSceneTo(int target) {

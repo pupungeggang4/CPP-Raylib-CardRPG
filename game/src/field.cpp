@@ -7,7 +7,7 @@ Field::Field() {
     camera.x = 0; camera.y = 0; camera.width = 800; camera.height = 600;
     for (int i = 0; i < 3; i++) {
         FieldEntity temp;
-        temp.type = i + 2;
+        temp.type = i + 1;
         temp.pos.x = i;
         temp.pos.y = i;
         entityList.push_back(temp);

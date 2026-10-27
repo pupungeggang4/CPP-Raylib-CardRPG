@@ -24,6 +24,7 @@ using std::make_shared;
 
 enum SceneName {TITLE, FIELD, BATTLE};
 enum State {NORMAL, INVENTORY, MAP};
-enum FieldEntityType {NONE, PLAYER, PORTAL, SAVE, ENEMY};
+enum FieldEntityType {NONE, PORTAL, SAVE, ENEMY};
+enum Direction {LEFT, RIGHT, UP, DOWN};
 
 #endif

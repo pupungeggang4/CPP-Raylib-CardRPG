@@ -29,6 +29,9 @@ void SceneField::render(Game& game) {
     }
 }
 
+void SceneField::keyDown(Game& game) {
+}
+
 void SceneField::mouseUp(Game& game, Vector2 pos) {
     if (game.menu) {
         menuField->mouseUp(game, pos);

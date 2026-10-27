@@ -6,6 +6,18 @@
 
 class Game;
 
+class FieldPlayer {
+    public:
+        Vector2 pos;
+        Vector2i cellPos;
+        Vector2i destination;
+        int facing = DOWN;
+
+        bool moving = false;
+        float movedDistance = 0;
+        int movingDirection = DOWN;
+};
+
 class FieldEntity {
     public:
         int type = 0;
@@ -19,7 +31,7 @@ class Field {
         std::vector<Recti> wall;
         
         Rectangle camera;
-        FieldEntity player;
+        FieldPlayer player;
         std::vector<FieldEntity> entityList;
 
         Field();

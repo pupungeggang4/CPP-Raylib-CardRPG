@@ -13,6 +13,7 @@ class Scene {
         virtual void ready(Game&);
         virtual void update(Game&);
         virtual void render(Game&);
+        virtual void keyDown(Game&);
         virtual void mouseUp(Game&, Vector2);
 };
 
@@ -22,6 +23,7 @@ class SceneTitle : public Scene {
         void ready(Game&) override;
         void update(Game&) override;
         void render(Game&) override;
+        void keyDown(Game&) override;
         void mouseUp(Game&, Vector2) override;
 };
 
@@ -33,6 +35,7 @@ class SceneField : public Scene {
         void ready(Game&) override;
         void update(Game&) override;
         void render(Game&) override;
+        void keyDown(Game&) override;
         void mouseUp(Game&, Vector2) override;
 };
 

@@ -25,6 +25,9 @@ void SceneTitle::render(Game& game) {
     Render::drawText("Quit Game", UI::UITitle["text_quit"]);
 }
 
+void SceneTitle::keyDown(Game& game) {
+}
+
 void SceneTitle::mouseUp(Game& game, Vector2 pos) {
     if (Util::pointInsideRectUI(pos, UI::UITitle["button_start"])) game.changeSceneTo(FIELD);
     else if (Util::pointInsideRectUI(pos, UI::UITitle["button_quit"])) game.running = false;
