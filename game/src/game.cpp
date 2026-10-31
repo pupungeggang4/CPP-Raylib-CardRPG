@@ -40,6 +40,8 @@ void Game::init() {
 }
 
 void Game::loop() {
+    dt = GetFrameTime();
+
     handleInput();
     scene->update(*this);
 
@@ -47,6 +49,16 @@ void Game::loop() {
     ClearBackground(RAYWHITE);
     scene->render(*this);
     EndDrawing();
+
+    if (queueSceneChange != -1) {
+        try {
+            scene = scenes[queueSceneChange];
+            scene->ready(*this);
+            queueSceneChange = -1;
+        } catch (...) {
+            running = 0;
+        }
+    }
 
     #ifdef __EMSCRIPTEN__
     if (running == 0) {
@@ -77,10 +89,5 @@ void Game::handleInput() {
 }
 
 void Game::changeSceneTo(int target) {
-    try {
-        scene = scenes[target];
-        scene->ready(*this);
-    } catch (...) {
-        running = 0;
-    }
+    queueSceneChange = target;
 }

@@ -12,11 +12,12 @@ class Game {
         // System var
         bool running;
         int width, height, logicWidth = 800, logicHeight = 600;
-        float scale = 0;
+        float scale = 0; float dt = 0;
 
         // Game system var
         std::unordered_map<int, shared_ptr<Scene>> scenes;
         shared_ptr<Scene> scene;
+        int queueSceneChange = -1;
         int state = NORMAL;
         bool menu = false;
         std::array<bool, 4> keyPressed;

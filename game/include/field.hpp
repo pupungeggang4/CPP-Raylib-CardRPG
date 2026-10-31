@@ -11,8 +11,11 @@ class FieldPlayer {
         Vector2 pos = {0, 0};
         Vector2i cellPos = {0, 0};
         Vector2i destination = {0, 0};
-        int facing = DOWN;
+        float speed = 320;
 
+        float frameTime = 0;
+
+        int facing = DOWN;
         bool moving = false;
         float movedDistance = 0;
         int movingDirection = DOWN;
@@ -21,7 +24,8 @@ class FieldPlayer {
 class FieldEntity {
     public:
         int type = 0;
-        Vector2i pos;
+        Vector2 pos;
+        Vector2i cellPos;
 };
 
 class Field {

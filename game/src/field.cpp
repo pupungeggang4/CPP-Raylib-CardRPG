@@ -9,8 +9,8 @@ Field::Field() {
     for (int i = 0; i < 3; i++) {
         FieldEntity temp;
         temp.type = i + 1;
-        temp.pos.x = i;
-        temp.pos.y = i;
+        temp.cellPos.x = i + 2;
+        temp.cellPos.y = i + 2;
         entityList.push_back(temp);
     }
 }
@@ -22,6 +22,7 @@ void Field::update(Game& game) {
             if (game.keyPressed[i]) {
                 player.moving = true;
                 player.movedDistance = 0;
+                player.facing = i;
                 player.movingDirection = i;
                 player.cellPos.x += directionCell[i][0];
                 player.cellPos.y += directionCell[i][1];
@@ -29,27 +30,48 @@ void Field::update(Game& game) {
             }
         }
     } else {
-        player.pos.x += directionCell[player.movingDirection][0] * 5;
-        player.pos.y += directionCell[player.movingDirection][1] * 5;
-        player.movedDistance += 5;
+        player.pos.x += directionCell[player.movingDirection][0] * player.speed * game.dt;
+        player.pos.y += directionCell[player.movingDirection][1] * player.speed * game.dt;
+        player.movedDistance += player.speed * game.dt;
         if (player.movedDistance > 40) {
             player.pos.x = player.cellPos.x * 40;
             player.pos.y = player.cellPos.y * 40;
             player.moving = false;
+            for (int i = 0; i < entityList.size(); i++) {
+                FieldEntity entity = entityList[i];
+                if (entity.type == ENEMY) {
+                    if (entity.cellPos.x == player.cellPos.x && entity.cellPos.y == player.cellPos.y) {
+                        entityList.erase(entityList.begin() + i);
+                        game.changeSceneTo(BATTLE);
+                        break;
+                    }
+                }
+            }
         }
     }
 }
 
 void Field::render(Game& game) {
+    // Rendering entities
     for (auto& value: entityList) {
         Rectangle source = {0, 0, 20, 20};
         if (value.type == PORTAL) source.x = 0;
         else if (value.type == SAVE) source.x = 20;
         else if (value.type == ENEMY) source.x = 40;
-        Rectangle dest = {(float)value.pos.x * 40, (float)value.pos.y * 40, 40, 40};
+        Rectangle dest = {(float)value.cellPos.x * 40, (float)value.cellPos.y * 40, 40, 40};
         Vector2 origin = {0, 0};
         DrawTexturePro(Asset::texture["entity"], source, dest, origin, 0, WHITE);
     }
 
-    Render::drawRect({player.pos.x, player.pos.y, 40.0f, 40.0f}, BLUE);
+    // Rendering player
+    player.frameTime += game.dt;
+    int frame = 0;
+    if (player.moving) frame += 8;
+    frame += player.facing * 2 + (int)(player.frameTime / 0.4f) % 2;
+    int col = frame % 4;
+    int row = (frame - col) / 4;
+    Rectangle rect = {float(col) * 20, float(row) * 20, 20, 20};
+    Rectangle dest = {player.pos.x, player.pos.y, 40, 40};
+    Vector2 origin = {0, 0};
+    DrawTexturePro(Asset::texture["player"], rect, dest, origin, 0, WHITE);
 }

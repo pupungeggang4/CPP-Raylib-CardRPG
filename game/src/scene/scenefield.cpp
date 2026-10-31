@@ -14,6 +14,7 @@ SceneField::SceneField() {
 }
 
 void SceneField::ready(Game& game) {
+    game.menu = false;
 }
 
 void SceneField::update(Game& game) {

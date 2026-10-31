@@ -42,10 +42,13 @@ class SceneField : public Scene {
 
 class SceneBattle : public Scene {
     public:
+        shared_ptr<MenuBattle> menuBattle;
+
         SceneBattle();
         void ready(Game&) override;
         void update(Game&) override;
         void render(Game&) override;
+        void keyDown(Game&) override;
         void mouseUp(Game&, Vector2) override;
 };
 
@@ -61,8 +64,11 @@ class MenuField : public Scene {
 
 class MenuBattle : public Scene {
     public:
+        int selected = 0;
+
         MenuBattle();
         void render(Game&) override;
+        void keyDown(Game&) override;
         void mouseUp(Game&, Vector2) override;
 };
 #endif
