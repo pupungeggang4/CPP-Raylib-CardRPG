@@ -52,13 +52,20 @@ void Field::update(Game& game) {
 }
 
 void Field::render(Game& game) {
+    // Adjusting camera
+    camera.x = player.pos.x;
+    camera.y = player.pos.y;
+
     // Rendering entities
     for (auto& value: entityList) {
         Rectangle source = {0, 0, 20, 20};
         if (value.type == PORTAL) source.x = 0;
         else if (value.type == SAVE) source.x = 20;
         else if (value.type == ENEMY) source.x = 40;
-        Rectangle dest = {(float)value.cellPos.x * 40, (float)value.cellPos.y * 40, 40, 40};
+        Rectangle dest = {
+            (float)value.cellPos.x * 40 - 20.0f - camera.x + camera.width / 2.0f,
+            (float)value.cellPos.y * 40 - 20.0f - camera.y + camera.height / 2.0f,
+            40, 40};
         Vector2 origin = {0, 0};
         DrawTexturePro(Asset::texture["entity"], source, dest, origin, 0, WHITE);
     }
@@ -71,7 +78,10 @@ void Field::render(Game& game) {
     int col = frame % 4;
     int row = (frame - col) / 4;
     Rectangle rect = {float(col) * 20, float(row) * 20, 20, 20};
-    Rectangle dest = {player.pos.x, player.pos.y, 40, 40};
+    Rectangle dest = {
+        player.pos.x - 20.0f - camera.x + camera.width / 2.0f,
+        player.pos.y - 20.0f - camera.y + camera.height / 2.0f,
+        40, 40};
     Vector2 origin = {0, 0};
     DrawTexturePro(Asset::texture["player"], rect, dest, origin, 0, WHITE);
 }

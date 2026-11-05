@@ -36,7 +36,7 @@ class Field {
         std::vector<int> enemyPool;
         std::vector<Recti> wall;
         
-        Rectangle camera;
+        Rectangle camera = {0.0f, 0.0f, 800.0f, 600.0f};
         FieldPlayer player;
         std::vector<FieldEntity> entityList;
 

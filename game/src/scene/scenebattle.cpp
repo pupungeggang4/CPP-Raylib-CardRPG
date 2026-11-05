@@ -9,6 +9,7 @@
 
 SceneBattle::SceneBattle() {
     menuBattle = make_shared<MenuBattle>();
+    windowBattleStart = make_shared<WindowBattleStart>();
 }
 
 void SceneBattle::ready(Game& game) {

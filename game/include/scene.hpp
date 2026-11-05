@@ -6,6 +6,8 @@
 class Game;
 class MenuField;
 class MenuBattle;
+class WindowBattleStart;
+class WindowInventory;
 
 class Scene {
     public:
@@ -30,6 +32,7 @@ class SceneTitle : public Scene {
 
 class SceneField : public Scene {
     public:
+        shared_ptr<WindowInventory> windowInventory;
         shared_ptr<MenuField> menuField;
 
         SceneField();
@@ -42,11 +45,28 @@ class SceneField : public Scene {
 
 class SceneBattle : public Scene {
     public:
+        shared_ptr<WindowBattleStart> windowBattleStart;
         shared_ptr<MenuBattle> menuBattle;
 
         SceneBattle();
         void ready(Game&) override;
         void update(Game&) override;
+        void render(Game&) override;
+        void keyDown(Game&) override;
+        void mouseUp(Game&, Vector2) override;
+};
+
+class WindowInventory : public Scene {
+    public:
+        WindowInventory();
+        void render(Game&) override;
+        void keyDown(Game&) override;
+        void mouseUp(Game&, Vector2) override;
+};
+
+class WindowBattleStart : public Scene {
+    public:
+        WindowBattleStart();
         void render(Game&) override;
         void keyDown(Game&) override;
         void mouseUp(Game&, Vector2) override;

@@ -13,10 +13,20 @@ std::unordered_map<std::string, std::array<float, 6>> UI::UITitle = {
 
 std::unordered_map<std::string, std::array<float, 6>> UI::UIField = {
     {"button_menu", {740, 20, 40, 40}},
+    {"text_key", {20, 560}}
 };
 
 std::unordered_map<std::string, std::array<float, 6>> UI::UIBattle = {
     {"button_menu", {740, 20, 40, 40}},
+};
+
+std::unordered_map<std::string, std::array<float, 6>> UI::UIInventory = {
+    {"rect", {80, 20, 640, 560}},
+    {"button_close", {680, 20, 40, 40}},
+};
+
+std::unordered_map<std::string, std::array<float, 6>> UI::UIBattleStart = {
+
 };
 
 std::unordered_map<std::string, std::array<float, 6>> UI::UIMenuField = {

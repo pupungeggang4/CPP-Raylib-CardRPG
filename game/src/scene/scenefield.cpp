@@ -11,6 +11,7 @@
 
 SceneField::SceneField() {
     menuField = make_shared<MenuField>();
+    windowInventory = make_shared<WindowInventory>();
 }
 
 void SceneField::ready(Game& game) {
@@ -28,7 +29,10 @@ void SceneField::update(Game& game) {
 void SceneField::render(Game& game) {
     game.field->render(game);
 
+    Render::drawText("WASD Move I Inventory E Interact", UI::UIField["text_key"]);
     Render::drawTexture(Asset::texture["button_menu"], UI::UIField["button_menu"]);
+
+    if (game.state == INVENTORY) windowInventory->render(game);
 
     if (game.menu) {
         menuField->render(game);
@@ -44,6 +48,17 @@ void SceneField::keyDown(Game& game) {
     } else {
         if (IsKeyPressed(KEY_ESCAPE)) {
             game.menu = true;
+        }
+
+        if (game.state == NORMAL) {
+            if (IsKeyPressed(KEY_I)) {
+                game.state = INVENTORY;
+            }
+        } else if (game.state == INVENTORY) {
+            if (IsKeyPressed(KEY_I)) {
+                game.state = NORMAL;
+            }
+            windowInventory->keyDown(game);
         }
     }
 }
