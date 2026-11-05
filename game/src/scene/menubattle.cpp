@@ -44,18 +44,16 @@ void MenuBattle::keyDown(Game& game) {
     }
 }
 
-
-
 void MenuBattle::mouseUp(Game& game, Vector2 pos) {
-    if (Util::pointInsideRectUI(pos, UI::UIMenuField["button_resume"])) {
+    if (Util::pointInsideRectUI(pos, UI::UIMenuBattle["button_resume"])) {
         game.menu = false;
-    } else if (Util::pointInsideRectUI(pos, UI::UIMenuField["button_surrender"])) {
+    } else if (Util::pointInsideRectUI(pos, UI::UIMenuBattle["button_surrender"])) {
         game.menu = false;
         game.changeSceneTo(FIELD);
-    } else if (Util::pointInsideRectUI(pos, UI::UIMenuField["button_exit"])) {
+    } else if (Util::pointInsideRectUI(pos, UI::UIMenuBattle["button_exit"])) {
         game.menu = false;
         game.changeSceneTo(TITLE);
-    } else if (Util::pointInsideRectUI(pos, UI::UIMenuField["button_quit"])) {
+    } else if (Util::pointInsideRectUI(pos, UI::UIMenuBattle["button_quit"])) {
         game.running = false;
     }
 }
