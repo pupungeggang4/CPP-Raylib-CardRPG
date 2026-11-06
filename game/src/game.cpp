@@ -13,19 +13,23 @@ void Game::init() {
     #ifdef __EMSCRIPTEN__
     InitWindow(logicWidth, logicHeight, "Card RPG");
     #else
-    SetConfigFlags(FLAG_WINDOW_HIGHDPI);
     SetConfigFlags(FLAG_VSYNC_HINT);
     InitWindow(logicWidth, logicHeight, "Card RPG");
+    Camera2D tempCamera = {0};
+    camera = tempCamera;
     #ifndef __APPLE__
-    Vector2 dpiScale  = GetWindowScaleDPI();
-    width = (int)(logicWidth * dpiScale.x);
-    height = (int)(logicHeight * dpiScale.y);
-    SetWindowSize(width, height);
+    Vector2 scale  = GetWindowScaleDPI();
+    if (GetMonitorWidth(0) / scale.x > 1280) {
+        SetWindowSize(logicWidth * scale.x, logicHeight * scale.y);
+        SetWindowPosition(
+            GetMonitorWidth(0) / 2 - GetRenderWidth() / 2,
+            GetMonitorHeight(0) / 2 - GetRenderHeight() / 2
+        );
+    }
     #endif
     SetExitKey(KEY_GRAVE);
     #endif
     running = 1;
-    scale = (float)GetRenderWidth() / logicWidth;
     keyPressed = {false, false, false, false};
 
     Asset::assetLoad();
@@ -40,6 +44,7 @@ void Game::init() {
 }
 
 void Game::loop() {
+    camera.zoom = GetRenderWidth() / logicWidth;
     dt = GetFrameTime();
 
     handleInput();
@@ -71,7 +76,7 @@ void Game::loop() {
 
 void Game::handleInput() {
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-        Vector2 pos = GetMousePosition();
+        Vector2 pos = Vector2Scale(GetMousePosition(), 1 / camera.zoom);
         printf("(%.0f, %.0f)\n", pos.x, pos.y);
         scene->mouseUp(*this, pos);
     }

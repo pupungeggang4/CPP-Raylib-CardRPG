@@ -12,7 +12,7 @@ class Game {
         // System var
         bool running;
         int width, height, logicWidth = 800, logicHeight = 600;
-        float scale = 0; float dt = 0;
+        float dt = 0; Camera2D camera;
 
         // Game system var
         std::unordered_map<int, shared_ptr<Scene>> scenes;
