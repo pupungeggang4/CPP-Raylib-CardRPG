@@ -13,19 +13,19 @@ void Game::init() {
     #ifdef __EMSCRIPTEN__
     InitWindow(logicWidth, logicHeight, "Card RPG");
     #else
+    float aspRatio = 0.75;
     SetConfigFlags(FLAG_VSYNC_HINT);
-    InitWindow(logicWidth, logicHeight, "Card RPG");
-    Camera2D tempCamera = {0};
-    camera = tempCamera;
+    int width = 800, height = 600;
+    InitWindow(width, height, "Puzzle Game");
     #ifndef __APPLE__
-    Vector2 scale  = GetWindowScaleDPI();
-    if (GetMonitorWidth(0) / scale.x > 1280) {
-        SetWindowSize(logicWidth * scale.x, logicHeight * scale.y);
-        SetWindowPosition(
-            GetMonitorWidth(0) / 2 - GetRenderWidth() / 2,
-            GetMonitorHeight(0) / 2 - GetRenderHeight() / 2
-        );
+    int mWidth = GetMonitorWidth(0); int mHeight = GetMonitorHeight(0);
+    if (mWidth * aspRatio > height) {
+        height = (int)(mHeight * 0.8); width = (int)(height / aspRatio);
+    } else {
+        width = (int)(mWidth * 0.8); height = (int)(width * aspRatio);
     }
+    SetWindowSize(width, height);
+    SetWindowPosition((mWidth - width) / 2, (mHeight - height) / 2);
     #endif
     SetExitKey(KEY_GRAVE);
     #endif
@@ -33,7 +33,11 @@ void Game::init() {
     keyPressed = {false, false, false, false};
 
     Asset::assetLoad();
+    FieldData::loadFieldData();
+
     field = make_shared<Field>();
+    field->place = HOME_TOWN;
+    field->loadField(HOME_TOWN);
 
     scenes = {};
     scenes.emplace(TITLE, make_shared<SceneTitle>());
@@ -44,15 +48,17 @@ void Game::init() {
 }
 
 void Game::loop() {
-    camera.zoom = GetRenderWidth() / logicWidth;
+    camera.zoom = (float)GetRenderWidth() / logicWidth;
     dt = GetFrameTime();
 
     handleInput();
     scene->update(*this);
 
     BeginDrawing();
+    BeginMode2D(camera);
     ClearBackground(RAYWHITE);
     scene->render(*this);
+    EndMode2D();
     EndDrawing();
 
     if (queueSceneChange != -1) {

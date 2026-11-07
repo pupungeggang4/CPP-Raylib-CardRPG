@@ -6,13 +6,6 @@
 
 Field::Field() {
     camera.x = 0; camera.y = 0; camera.width = 800; camera.height = 600;
-    for (int i = 0; i < 3; i++) {
-        FieldEntity temp;
-        temp.type = i + 1;
-        temp.cellPos.x = i + 2;
-        temp.cellPos.y = i + 2;
-        entityList.push_back(temp);
-    }
 }
 
 void Field::update(Game& game) {
@@ -84,4 +77,33 @@ void Field::render(Game& game) {
         40, 40};
     Vector2 origin = {0, 0};
     DrawTexturePro(Asset::texture["player"], rect, dest, origin, 0, WHITE);
+}
+
+void Field::loadField(int place) {
+    entityList.clear();
+
+    for (int i = 0; i < 100; i++) {
+        if (FieldData::dataCell[place][i][0] == PORTAL) {
+            FieldEntity entity;
+            entity.type = PORTAL;
+            entity.cellPos.x = FieldData::dataCell[place][i][1];
+            entity.cellPos.y = FieldData::dataCell[place][i][2];
+            entity.destination = FieldData::dataCell[place][i][3];
+            entity.desPos.x = FieldData::dataCell[place][i][4];
+            entity.desPos.y = FieldData::dataCell[place][i][5];
+            entityList.push_back(entity);
+        } else if (FieldData::dataCell[place][i][0] == ENEMY) {
+            FieldEntity entity;
+            entity.type = ENEMY;
+            entity.cellPos.x = FieldData::dataCell[place][i][1];
+            entity.cellPos.y = FieldData::dataCell[place][i][2];
+            entityList.push_back(entity);
+        } else if (FieldData::dataCell[place][i][0] == SAVE) {
+            FieldEntity entity;
+            entity.type = SAVE;
+            entity.cellPos.x = FieldData::dataCell[place][i][1];
+            entity.cellPos.y = FieldData::dataCell[place][i][2];
+            entityList.push_back(entity);
+        }
+    }
 }

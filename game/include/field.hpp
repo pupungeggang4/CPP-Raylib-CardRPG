@@ -4,6 +4,8 @@
 #include "includes.hpp"
 #include "shape.hpp"
 
+enum FIeldPlace {HOME_TOWN, PLAIN_1, PLAIN_2};
+
 class Game;
 
 class FieldPlayer {
@@ -26,13 +28,15 @@ class FieldEntity {
         int type = 0;
         Vector2 pos;
         Vector2i cellPos;
+        int destination;
+        Vector2i desPos;
 };
 
 class Field {
     public:
         std::array<std::array<float, 2>, 4> directionCell = {{{-1, 0}, {1, 0}, {0, -1}, {0, 1}}};
 
-        std::string place;
+        int place;
         std::vector<int> enemyPool;
         std::vector<Recti> wall;
         
@@ -41,8 +45,17 @@ class Field {
         std::vector<FieldEntity> entityList;
 
         Field();
+        void loadField(int);
         void update(Game&);
         void render(Game&);
+};
+
+class FieldData {
+    public:
+        static std::unordered_map<int, std::string> dataPath;
+        static std::array<std::array<std::array<int, 6>, 100>, 100> dataCell;
+        static std::array<std::array<std::array<int, 6>, 100>, 100> dataWall;
+        static void loadFieldData();
 };
 
 #endif
