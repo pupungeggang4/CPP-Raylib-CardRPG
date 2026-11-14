@@ -53,6 +53,8 @@ void SceneField::keyDown(Game& game) {
         if (game.state == NORMAL) {
             if (IsKeyPressed(KEY_I)) {
                 game.state = INVENTORY;
+            } else if (IsKeyPressed(KEY_E)) {
+                game.field->interact(game);
             }
         } else if (game.state == INVENTORY) {
             if (IsKeyPressed(KEY_I)) {

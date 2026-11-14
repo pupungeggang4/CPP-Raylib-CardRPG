@@ -6,6 +6,7 @@
 class Scene;
 class SceneTitle;
 class Field;
+class Battle;
 
 class Game {
     public:
@@ -23,7 +24,7 @@ class Game {
         std::array<bool, 4> keyPressed;
 
         // Game var
-        shared_ptr<Field> field;
+        shared_ptr<Field> field; shared_ptr<Battle> battle;
 
         Game();
         void init();

@@ -3,6 +3,7 @@
 #include "render.hpp"
 #include "asset.hpp"
 #include "game.hpp"
+#include "battle/battle.hpp"
 
 Field::Field() {
     camera.x = 0; camera.y = 0; camera.width = 800; camera.height = 600;
@@ -30,14 +31,16 @@ void Field::update(Game& game) {
             player.pos.x = player.cellPos.x * 40;
             player.pos.y = player.cellPos.y * 40;
             player.moving = false;
-            for (int i = 0; i < entityList.size(); i++) {
-                FieldEntity entity = entityList[i];
-                if (entity.type == ENEMY) {
-                    if (entity.cellPos.x == player.cellPos.x && entity.cellPos.y == player.cellPos.y) {
-                        entityList.erase(entityList.begin() + i);
-                        game.changeSceneTo(BATTLE);
-                        break;
-                    }
+
+            for (int i = 0; i < 4; i++) {
+                if (game.keyPressed[i]) {
+                    player.moving = true;
+                    player.movedDistance = 0;
+                    player.facing = i;
+                    player.movingDirection = i;
+                    player.cellPos.x += directionCell[i][0];
+                    player.cellPos.y += directionCell[i][1];
+                    break;
                 }
             }
         }
@@ -79,7 +82,36 @@ void Field::render(Game& game) {
     DrawTexturePro(Asset::texture["player"], rect, dest, origin, 0, WHITE);
 }
 
+void Field::interact(Game& game) {
+    for (int i = 0; i < entityList.size(); i++) {
+        FieldEntity entity = entityList[i];
+        if (entity.cellPos.x == player.cellPos.x && entity.cellPos.y == player.cellPos.y) {
+            if (entity.type == ENEMY) {
+                entityList.erase(entityList.begin() + i);
+                int index = GetRandomValue(0, monsterPool.size() - 1);
+                game.battle->enemyID = monsterPool[index];
+                game.changeSceneTo(BATTLE);
+                break;
+            } else if (entity.type == PORTAL) {
+                place = entity.destination;
+                player.cellPos.x = entity.desPos.x;
+                player.cellPos.y = entity.desPos.y;
+                player.pos.x = player.cellPos.x * 40;
+                player.pos.y = player.cellPos.y * 40;
+                loadField(place);
+                break;
+            }
+        }
+    }
+}
+
 void Field::loadField(int place) {
+    monsterPool.clear();
+    for (int i = 0; i < 100; i++) {
+        if (FieldData::dataMonsterPool[place][i] != 0) monsterPool.push_back(FieldData::dataMonsterPool[place][i]);
+        else break;
+    }
+
     entityList.clear();
 
     for (int i = 0; i < 100; i++) {
@@ -88,9 +120,9 @@ void Field::loadField(int place) {
             entity.type = PORTAL;
             entity.cellPos.x = FieldData::dataCell[place][i][1];
             entity.cellPos.y = FieldData::dataCell[place][i][2];
-            entity.destination = FieldData::dataCell[place][i][3];
-            entity.desPos.x = FieldData::dataCell[place][i][4];
-            entity.desPos.y = FieldData::dataCell[place][i][5];
+            entity.desPos.x = FieldData::dataCell[place][i][3];
+            entity.desPos.y = FieldData::dataCell[place][i][4];
+            entity.destination = FieldData::dataCell[place][i][5];
             entityList.push_back(entity);
         } else if (FieldData::dataCell[place][i][0] == ENEMY) {
             FieldEntity entity;

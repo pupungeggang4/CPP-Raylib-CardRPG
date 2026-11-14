@@ -3,6 +3,8 @@
 #include "asset.hpp"
 #include "field.hpp"
 
+#include "battle/battle.hpp"
+
 Game game = Game();
 
 Game::Game() {
@@ -38,6 +40,7 @@ void Game::init() {
     field = make_shared<Field>();
     field->place = HOME_TOWN;
     field->loadField(HOME_TOWN);
+    battle = make_shared<Battle>();
 
     scenes = {};
     scenes.emplace(TITLE, make_shared<SceneTitle>());
